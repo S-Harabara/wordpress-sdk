@@ -15,7 +15,7 @@
 	 *
 	 * @var string
 	 */
-	$this_sdk_version = '2.0.1';
+	$this_sdk_version = '2.0.2';
 
 	#region SDK Selection Logic --------------------------------------------------------------------
 
@@ -179,6 +179,13 @@
 		} else {
 			$current_theme               = wp_get_theme();
 			$is_newest_sdk_plugin_active = ( $current_theme->stylesheet === $fs_newest_sdk->plugin_path );
+		}
+
+		
+		$current_theme_parent = $current_theme->parent();
+
+		if(!$is_newest_sdk_plugin_active && $current_theme_parent instanceof WP_Theme){
+			$is_newest_sdk_plugin_active = ($fs_newest_sdk->plugin_path === $current_theme_parent->stylesheet);
 		}
 
 		if ( $is_current_sdk_newest &&
